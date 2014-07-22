@@ -33,8 +33,8 @@ class Motor(object):
         self._state = value
 
     def update_state(self):
-        GPIO.out(self._forwards_pin, self._state == Motor.FORWARDS)
-        GPIO.out(self._backwards_pin, self._state == Motor.BACKWARDS)
+        GPIO.output(self._forwards_pin, self._state == Motor.FORWARDS)
+        GPIO.output(self._backwards_pin, self._state == Motor.BACKWARDS)
 
     def forwards(self):
         self.state = Motor.FORWARDS
