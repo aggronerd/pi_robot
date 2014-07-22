@@ -1,0 +1,5 @@
+To install pi_robot on your raspberry pi robot:
+
+- Copy misc/init.d/pirobot to /etc/init.d/pirobot on your raspberry pi.
+- chown 755 /etc/init.d/pirobot
+- update-rc.d pirobot defaults

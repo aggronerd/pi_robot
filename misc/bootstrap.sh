@@ -1,9 +1,11 @@
 #!/bin/sh
 
-BRANCH=development
-VERSION_LOCATION="https://uk.co.gregorydoran.pi.robot.s3-website-eu-west-1.amazonaws.com/pi_robot_$BRANCH.tar.gz"
-INSTALL_LOCATION=/opt/usr/lib/pi_robot
+SSH_HOST="$1"
 
-rm -rf "$INSTALL_LOCATION"
-curl "$VERSION_LOCATION" | tar xzC "$INSTALL_LOCATION"
+scp misc/init.d/pirobot "pi@$SSH_HOST:~/"
+ssh "pi@$SSH_HOST" "sudo cp ~/pirobot /etc/init.d/"
+ssh "pi@$SSH_HOST" "sudo chmod 755 /etc/init.d/pirobot"
+ssh "pi@$SSH_HOST" "sudo update-rc.d pirobot defaults"
+
+
 
