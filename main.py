@@ -3,9 +3,6 @@ __author__ = 'greg'
 import time, RPi.GPIO as GPIO
 import actuators
 
-GPIO.setwarnings(False)
-GPIO.setmode(GPIO.BOARD)
-
 print "Running"
 actuators.left_motor.forwards()
 actuators.right_motor.forwards()
