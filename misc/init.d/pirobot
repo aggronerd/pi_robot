@@ -1,0 +1,32 @@
+#! /bin/sh
+# /etc/init.d/pirobot
+
+BRANCH=development
+VERSION_LOCATION="https://uk.co.gregorydoran.pi.robot.s3-website-eu-west-1.amazonaws.com/pi_robot_$BRANCH.tar.gz"
+INSTALL_LOCATION=/opt/usr/lib/pi_robot
+
+# The following part carries out specific functions depending on arguments.
+case "$1" in
+  start)
+
+    echo "Setting up pirobot"
+    rm -rf "$INSTALL_LOCATION"
+    curl "$VERSION_LOCATION" | tar xzC "$INSTALL_LOCATION"
+
+    echo "Starting pirobot"
+    python "$INSTALL_LOCATION/main.py" &
+
+    ;;
+  stop)
+
+    echo "Stopping pirobot"
+
+    ;;
+  *)
+  
+    echo "Usage: /etc/init.d/pirobot {start|stop}"
+    exit 1
+    ;;
+esac
+
+exit 0
