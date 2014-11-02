@@ -14,5 +14,14 @@ if ! hash git 2>/dev/null; then
     exit 1
 fi
 
-git archive --format tar $BRANCH | gzip - > "$TEMP_LOCATION"
+if [ "$BRANCH" = development ]; then
+    LOCATION="$(git rev-parse --show-toplevel)"
+    CUR_DIR="$(pwd)"
+    cd "$LOCATION"
+    tar --exclude=.git --exclude=.idea -czvf "$TEMP_LOCATION" "."
+    cd "$CUR_DIR"
+else
+    git archive --format tar $BRANCH | gzip - > "$TEMP_LOCATION"
+fi
+
 aws s3 cp --acl public-read "$TEMP_LOCATION" "s3://uk.co.gregorydoran.pi.robot/$FILENAME"

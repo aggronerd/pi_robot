@@ -1,16 +1,18 @@
 __author__ = 'greg'
 
-import time, RPi.GPIO as GPIO
-import actuators
+import setup
+from controller import PiRobotJabberBot
+import RPi.GPIO as GPIO
+import logging
 
 print "Running"
-actuators.left_motor.forwards()
-actuators.right_motor.forwards()
 
-time.sleep(1)
+logging.basicConfig(level=logging.DEBUG)
+username = 'keximbot@adastra.re'
+password = '8_eow3#Ka33f3s'
+bot = PiRobotJabberBot(username, password)
+bot.serve_forever()
 
-actuators.left_motor.stop()
-actuators.right_motor.stop()
 print "Finished"
 
 GPIO.cleanup()

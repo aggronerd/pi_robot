@@ -5,9 +5,21 @@ BRANCH="development"
 VERSION_LOCATION="http://uk.co.gregorydoran.pi.robot.s3-website-eu-west-1.amazonaws.com/pi_robot_$BRANCH.tar.gz"
 INSTALL_LOCATION=/opt/usr/lib/pi_robot
 
+wait_for_internet() {
+   el=1
+   while [ $el -ne 0 ]; do
+      sleep 1
+      ping -c 1 "google.com" > /dev/null 2>&1
+      el=$?
+   done
+}
+
 # The following part carries out specific functions depending on arguments.
 case "$1" in
   start)
+
+    echo "Waiting for connection..."
+    wait_for_internet
 
     echo "Setting up pirobot"
     rm -rf "$INSTALL_LOCATION"
@@ -15,7 +27,7 @@ case "$1" in
     curl "$VERSION_LOCATION" | tar -C "$INSTALL_LOCATION" -xzf -
 
     echo "Starting pirobot"
-    python "$INSTALL_LOCATION/main.py" &
+    python "$INSTALL_LOCATION/main.py" > /var/log/pyrobot.log &
 
     ;;
   stop)
