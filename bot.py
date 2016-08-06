@@ -4,9 +4,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-
 class PiRobotJabberBot(JabberBot):
-
     @botcmd
     def serverinfo( self, mess, args):
         """Displays information about the server"""
